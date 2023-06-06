@@ -1,0 +1,30 @@
+Description: >
+  Este stack va a crear 
+  una instancia y todo lo
+  que necesita
+Resources:
+  WebServer:
+    Type: 'AWS::EC2::Instance'
+    Properties: 
+      ImageId: "ami-024e6efaf93d85776"
+      InstanceType: t2.micro
+      KeyName: "keypair_personal_dcm"
+      SecurityGroupIds: 
+        - Ref: SecurityGroupSSH
+
+  SecurityGroupSSH:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties: 
+      GroupDescription: "Security group que permite el acceso ssh"
+      GroupName: "SSHSecurityGroup"
+      VpcId: "vpc-48bbd723"
+      SecurityGroupEgress: 
+        - CidrIp: "0.0.0.0/0"
+          FromPort: 22
+          IpProtocol: tcp
+          ToPort: 22
+      SecurityGroupIngress: 
+        - CidrIp: 0.0.0.0/0
+          FromPort: 0
+          IpProtocol: -1
+          ToPort: 0
